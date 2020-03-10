@@ -5,9 +5,9 @@ module.exports = authorize;
 
 function authorize(roles = []) {
 
-    // if (typeof roles === 'string') {
-    //     roles = [roles];
-    // }
+    if (typeof roles === 'string') {
+        roles = [roles];
+    }
     return [
         expressJwt({secret}),
         (req, res, next) => {
