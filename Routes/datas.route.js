@@ -5,7 +5,6 @@ const DatasController = require('../Controllers/datas.controller');
 const checkAuth = require('../Middleware/check-auth');
 const authorize = require('../Middleware/authorize');
 const role = require('../Middleware/roles');
-
 /**
  * @route POST datas/add
  * @desc Create a data

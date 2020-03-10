@@ -119,7 +119,23 @@ exports.get_geolocalisation_from_device = (req, res, next) => {
         .then(datas => {
             if (datas.length >= 1) {
                 var todaysDate = new Date(Date.now());
-                var geoDatasArray = [];
+                var geoDatasArray = [{
+                    type: "FeatureCollection",
+                    name: "Tracks",
+                    features: [
+                        {
+                            type: "Feature",
+                            properties: {
+                                Name: "chemin",
+                                Remarks: "Nfactory rouen",
+                                Length: "54827.73937141163"
+                            },
+                            geometry: {
+                                type: "LineString"
+                            }
+                        }
+                    ]
+                }];
                 var i = 0;
                 datas.forEach(function (data) {
                     if (data.timestamp) {

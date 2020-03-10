@@ -5,6 +5,7 @@ const UserController = require('../Controllers/user.controller');
 const checkAuth = require('../Middleware/check-auth');
 const authorize = require('../Middleware/authorize');
 const role = require('../Middleware/roles');
+const convert_geo = require('../Middleware/convert_geo');
 /**
  * @route POST users/signup
  * @desc Add a user
@@ -40,7 +41,7 @@ router.delete("/delete_account/:userId", UserController.user_delete_self);
  * @desc get all users
  * @access Private
  */
-router.get("/getall", checkAuth, authorize(role.admin), UserController.get_all);
+router.get("/getall", UserController.get_all);
 
 /**
  * @route users/modify/:id
