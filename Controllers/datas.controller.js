@@ -131,7 +131,6 @@ exports.get_geolocalisation_from_device = (req, res, next) => {
                             geometry: {
                                 type: "LineString",
                                 coordinates: ""
-                                // timestamp: ""
                             }
                         }
                     ]
@@ -145,7 +144,7 @@ exports.get_geolocalisation_from_device = (req, res, next) => {
                                 data.long = "error";
                             }
                             geoDatasArray[0].features[0].geometry.coordinates += [
-                                '[' + data.lat + ', ' + data.long + '], ',
+                                '[' + data.lat + ', ' + data.long + '], '
 
                             ];
                             // geoDatasArray[0].features[0].geometry.timestamp += [{
@@ -165,7 +164,7 @@ exports.get_geolocalisation_from_device = (req, res, next) => {
 };
 
 exports.get_daily_steps = (req, res, next) => {
-
+    Data.find({timestamp_day: req.params.timestamp_day});
 };
 
 exports.get_weekly_steps = (req, res, next) => {

@@ -18,7 +18,7 @@ router.post('/add', DatasController.data_add);
  * @access Private
  */
 
-router.get('/getall', checkAuth, authorize(role.admin), DatasController.data_get_all);
+router.get('/getall', checkAuth, DatasController.data_get_all);
 /**
  * @route GET datas/getsome/:pseudo
  * @desc Find all datas from a pseudo
@@ -40,7 +40,7 @@ router.get('/getone/:id', checkAuth, DatasController.data_get_one);
  * @access Private
  */
 
-router.delete('/delete/:id', checkAuth, authorize(role.admin), DatasController.data_delete_one);
+router.delete('/delete/:id', checkAuth, DatasController.data_delete_one);
 
 // @route   GET datas/getgeodatas/:id_device
 // @desc    récupère les données de géolocalisation selon un id de téléphone

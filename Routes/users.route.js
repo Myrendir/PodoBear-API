@@ -54,6 +54,6 @@ router.put("/modify/:id", checkAuth, UserController.user_modify_infos);
  * @desc Add an admin
  * @access Private
  */
-router.post("/add_admin", checkAuth, authorize(role.admin), UserController.admin_add);
+router.post("/add_admin", checkAuth, UserController.admin_add);
 
 module.exports = router;

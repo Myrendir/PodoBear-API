@@ -53,7 +53,9 @@
         {
           "name": "Content",
           "in": "body",
-          "schema": {          }
+          "schema": {
+            "$ref": "#/definitions/Datas"
+          }
         }
       ],
       "post": {
