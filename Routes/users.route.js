@@ -40,20 +40,20 @@ router.delete("/delete_account/:userId", UserController.user_delete_self);
  * @desc get all users
  * @access Private
  */
-router.get("/getall", UserController.get_all);
+router.get("/getall", checkAuth, UserController.get_all);
 
 /**
  * @route users/modify/:id
  * @desc Update user's infos
  * @access Private
  */
-router.put("/modify/:id", UserController.user_modify_infos);
+router.put("/modify/:id", checkAuth, UserController.user_modify_infos);
 
 /**
  * @route users/add_admin
  * @desc Add an admin
  * @access Private
  */
-router.post("/add_admin", UserController.admin_add);
+router.post("/add_admin", checkAuth, UserController.admin_add);
 
 module.exports = router;

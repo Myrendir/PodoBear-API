@@ -100,7 +100,7 @@ exports.data_add = (req, res, next) => {
             speed: req.body[i].speed,
             timestamp: req.body[i].timestamp,
             id_device: req.body[i].id_device,
-            created_at: Date.now(),
+            created_at: Date.now()
         });
         i++;
 
@@ -111,13 +111,29 @@ exports.data_add = (req, res, next) => {
     }
 };
 exports.get_one_by_device = (req, res, next) => {
-    Data.find({id_device: req.params.id_device}).sort({timestamp: 1}).then(data => {
-        if (data) {
-            res.send(data);
-        } else {
-            res.status(404).send({nodatafound: 'La data avec cet id_device n\'existe pas'})
-        }
-    })
+    Data.find({id_device: req.params.id_device})
+        .sort({timestamp: 1})
+        .then(data => {
+            if (data.length >= 1) {
+                let today = new Date(Date.now());
+                let arrayDate = [];
+
+                data.forEach(function (data) {
+                    if (data.timestamp) {
+                        if (today.getDate() === data.timestamp.getDate() && today.getMonth() === data.timestamp.getMonth()) {
+                            arrayDate.push({
+                                data
+                            })
+
+                        }
+
+                    }
+                });
+                res.send(arrayDate);
+            } else {
+                res.status(404).send({nodatafound: 'La data avec cet id_device n\'existe pas'})
+            }
+        })
         .catch(err =>
             res.status(404).send({nodatafound: 'La data avec cet id_device n\'existe pas'})
         );
@@ -175,7 +191,7 @@ exports.get_geolocalisation_from_device = (req, res, next) => {
 };
 
 exports.get_daily_steps = (req, res, next) => {
-    Data.find({timestamp_day: req.params.timestamp_day});
+    Data.find({timestamp: req.body.timestamp.getDate()});
 };
 
 exports.get_weekly_steps = (req, res, next) => {
