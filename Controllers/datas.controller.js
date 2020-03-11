@@ -142,6 +142,24 @@ exports.get_geolocalisation_from_device = (req, res, next) => {
         .then(datas => {
             if (datas.length >= 1) {
                 var todaysDate = new Date(Date.now());
+
+                var i = 0;
+                let array_ = [];
+                datas.forEach(function (data) {
+                    if (data.timestamp) {
+                        if (todaysDate.getDate() === data.timestamp.getDate() && todaysDate.getMonth() === data.timestamp.getMonth()) {
+                            if (!data.lat || !data.long) {
+                                data.lat = "error";
+                                data.long = "error";
+                            }
+
+                    array_.push([
+                        data.lat, data.long])
+
+
+                        }
+                    }
+                });
                 var geoDatasArray = [{
                     type: "FeatureCollection",
                     name: "Tracks",
@@ -155,28 +173,11 @@ exports.get_geolocalisation_from_device = (req, res, next) => {
                             },
                             geometry: {
                                 type: "LineString",
-                                coordinates: ['[']
+                                coordinates: array_
                             }
                         }
                     ]
                 }];
-                var i = 0;
-                datas.forEach(function (data) {
-                    if (data.timestamp) {
-                        if (todaysDate.getDate() === data.timestamp.getDate() && todaysDate.getMonth() === data.timestamp.getMonth()) {
-                            if (!data.lat || !data.long) {
-                                data.lat = "error";
-                                data.long = "error";
-                            }
-
-                            geoDatasArray[0].features[0].geometry.coordinates +=
-                                '[' + data.lat + ', ' + data.long + '], '
-                            ;
-
-                        }
-                    }
-                });
-                geoDatasArray[0].features[0].geometry.coordinates += ']';
                 res.send(geoDatasArray);
             } else {
                 res.status(404).send("Aucune donnée trouvée pour cet appareil");
