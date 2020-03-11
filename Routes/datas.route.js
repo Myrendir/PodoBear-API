@@ -59,4 +59,6 @@ router.get('/getweeklysteps/:id_device', DatasController.get_weekly_steps);
 router.get('/getmonthlysteps/:id_device', DatasController.get_monthly_steps);
 
 router.get('/getbydevice/:id_device', DatasController.get_one_by_device);
+
+router.get('/steps/:id_device', DatasController.get_daily_steps);
 module.exports = router;

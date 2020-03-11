@@ -5,6 +5,7 @@ const UserController = require('../Controllers/user.controller');
 const checkAuth = require('../Middleware/check-auth');
 const authorize = require('../Middleware/authorize');
 const role = require('../Middleware/roles');
+
 /**
  * @route POST users/signup
  * @desc Add a user

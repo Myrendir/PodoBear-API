@@ -124,9 +124,7 @@ exports.get_one_by_device = (req, res, next) => {
                             arrayDate.push({
                                 data
                             })
-
                         }
-
                     }
                 });
                 res.send(arrayDate);
@@ -157,7 +155,7 @@ exports.get_geolocalisation_from_device = (req, res, next) => {
                             },
                             geometry: {
                                 type: "LineString",
-                                coordinates: ""
+                                coordinates: ['[']
                             }
                         }
                     ]
@@ -170,16 +168,15 @@ exports.get_geolocalisation_from_device = (req, res, next) => {
                                 data.lat = "error";
                                 data.long = "error";
                             }
-                            geoDatasArray[0].features[0].geometry.coordinates += [
-                                '[' + data.lat + ', ' + data.long + '], '
 
-                            ];
-                            // geoDatasArray[0].features[0].geometry.timestamp += [{
-                            //     timestamp: data.timestamp
-                            // }]
+                            geoDatasArray[0].features[0].geometry.coordinates +=
+                                '[' + data.lat + ', ' + data.long + ']'
+                            ;
+
                         }
                     }
                 });
+                geoDatasArray[0].features[0].geometry.coordinates += ']';
                 res.send(geoDatasArray);
             } else {
                 res.status(404).send("Aucune donnée trouvée pour cet appareil");
@@ -191,7 +188,34 @@ exports.get_geolocalisation_from_device = (req, res, next) => {
 };
 
 exports.get_daily_steps = (req, res, next) => {
-    Data.find({timestamp: req.body.timestamp.getDate()});
+    Data.find({id_device: req.params.id_device})
+        .sort({timestamp: 1})
+        .then(data => {
+            if (data.length >= 1) {
+                let today = new Date(Date.now());
+                let hello = new Date(today.getFullYear, today.getDate, today.getMonth);
+                let arrayDate = [{
+                    "steps": Number(0)
+                }];
+                data.forEach(function (data) {
+                    if (data.timestamp) {
+                        if (today.getDate() === data.timestamp.getDate() && today.getMonth() === data.timestamp.getMonth()) {
+                            arrayDate[0].steps = [
+                                +data.steps
+                            ]
+                        }
+                    }
+
+                });
+
+                res.send(arrayDate);
+            } else {
+                res.status(404).send({nodatafound: 'La data avec cet id n\'existe pas'})
+            }
+        })
+        .catch(err =>
+            res.status(404).send({nodatafound: 'La data avec cet id n\'existe pas'})
+        );
 };
 
 exports.get_weekly_steps = (req, res, next) => {
