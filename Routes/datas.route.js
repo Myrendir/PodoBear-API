@@ -58,4 +58,5 @@ router.get('/getweeklysteps/:id_device', DatasController.get_weekly_steps);
 // @desc    recupère l'évolution du nombre de pas d'un appareil sur un mois
 router.get('/getmonthlysteps/:id_device', DatasController.get_monthly_steps);
 
+router.get('/getbydevice/:id_device', DatasController.get_one_by_device);
 module.exports = router;

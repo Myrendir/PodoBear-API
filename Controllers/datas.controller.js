@@ -110,7 +110,18 @@ exports.data_add = (req, res, next) => {
             });
     }
 };
-
+exports.get_one_by_device = (req, res, next) => {
+    Data.find({id_device: req.params.id_device}).sort({timestamp: 1}).then(data => {
+        if (data) {
+            res.send(data);
+        } else {
+            res.status(404).send({nodatafound: 'La data avec cet id_device n\'existe pas'})
+        }
+    })
+        .catch(err =>
+            res.status(404).send({nodatafound: 'La data avec cet id_device n\'existe pas'})
+        );
+};
 exports.get_geolocalisation_from_device = (req, res, next) => {
     Data.find({id_device: req.params.id_device})
         .sort({timestamp: 1})
