@@ -141,9 +141,7 @@ exports.get_geolocalisation_from_device = (req, res, next) => {
         .sort({timestamp: 1})
         .then(datas => {
             if (datas.length >= 1) {
-                var todaysDate = new Date(Date.now());
-
-                var i = 0;
+                const todaysDate = new Date(Date.now());
                 let array_ = [];
                 datas.forEach(function (data) {
                     if (data.timestamp) {
@@ -153,14 +151,14 @@ exports.get_geolocalisation_from_device = (req, res, next) => {
                                 data.long = "error";
                             }
 
-                    array_.push([
-                        data.lat, data.long])
+                            array_.push([
+                                data.long, data.lat])
 
 
                         }
                     }
                 });
-                var geoDatasArray = [{
+                const geoDatasArray = [{
                     type: "FeatureCollection",
                     name: "Tracks",
                     features: [
@@ -178,6 +176,7 @@ exports.get_geolocalisation_from_device = (req, res, next) => {
                         }
                     ]
                 }];
+                console.log('connard');
                 res.send(geoDatasArray);
             } else {
                 res.status(404).send("Aucune donnée trouvée pour cet appareil");
