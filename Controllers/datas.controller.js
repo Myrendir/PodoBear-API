@@ -170,7 +170,7 @@ exports.get_geolocalisation_from_device = (req, res, next) => {
                             }
 
                             geoDatasArray[0].features[0].geometry.coordinates +=
-                                '[' + data.lat + ', ' + data.long + ']'
+                                '[' + data.lat + ', ' + data.long + '], '
                             ;
 
                         }
