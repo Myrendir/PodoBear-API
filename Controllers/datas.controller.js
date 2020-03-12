@@ -150,11 +150,8 @@ exports.get_geolocalisation_from_device = (req, res, next) => {
                                 data.lat = "error";
                                 data.long = "error";
                             }
-
                             array_.push([
                                 data.long, data.lat])
-
-
                         }
                     }
                 });
@@ -176,7 +173,7 @@ exports.get_geolocalisation_from_device = (req, res, next) => {
                         }
                     ]
                 }];
-                console.log('connard');
+
                 res.send(geoDatasArray);
             } else {
                 res.status(404).send("Aucune donnée trouvée pour cet appareil");
@@ -194,21 +191,19 @@ exports.get_daily_steps = (req, res, next) => {
             if (data.length >= 1) {
                 let today = new Date(Date.now());
                 let hello = new Date(today.getFullYear, today.getDate, today.getMonth);
-                let arrayDate = [{
-                    "steps": Number(0)
-                }];
+                let value = Number(0);
+                let result = [];
                 data.forEach(function (data) {
                     if (data.timestamp) {
                         if (today.getDate() === data.timestamp.getDate() && today.getMonth() === data.timestamp.getMonth()) {
-                            arrayDate[0].steps = [
-                                +data.steps
-                            ]
+                            result.push(Number(data.steps))
+
                         }
                     }
 
                 });
 
-                res.send(arrayDate);
+                res.send(result);
             } else {
                 res.status(404).send({nodatafound: 'La data avec cet id n\'existe pas'})
             }
