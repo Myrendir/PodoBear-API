@@ -84,22 +84,22 @@ exports.data_add = (req, res, next) => {
 
     while (i < req.body.length) {
         const DataToAdd = new Data({
-            x: req.body[i].x,
-            y: req.body[i].y,
-            z: req.body[i].z,
-            positionX: req.body[i].positionX,
-            positionY: req.body[i].positionY,
-            positionZ: req.body[i].positionZ,
-            accX: req.body[i].accX,
-            accY: req.body[i].accY,
-            accZ: req.body[i].accZ,
-            steps: req.body[i].steps,
-            accuracy: req.body[i].accuracy,
-            long: req.body[i].long,
-            lat: req.body[i].lat,
-            speed: req.body[i].speed,
-            timestamp: req.body[i].timestamp,
-            id_device: req.body[i].id_device,
+            x: req.body[i].data.x,
+            y: req.body[i].data.y,
+            z: req.body[i].data.z,
+            positionX: req.body[i].data.positionX,
+            positionY: req.body[i].data.positionY,
+            positionZ: req.body[i].data.positionZ,
+            accX: req.body[i].data.accX,
+            accY: req.body[i].data.accY,
+            accZ: req.body[i].data.accZ,
+            steps: req.body[i].data.steps,
+            accuracy: req.body[i].data.accuracy,
+            long: req.body[i].data.long,
+            lat: req.body[i].data.lat,
+            speed: req.body[i].data.speed,
+            timestamp: req.body[i].data.timestamp,
+            id_device: req.body[i].data.id_device,
             created_at: Date.now()
         });
         i++;
@@ -200,7 +200,6 @@ exports.get_daily_steps = (req, res, next) => {
 
                         }
                     }
-
                 });
 
                 res.send(result);
